@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tencent.wxcloudrun.dao.CounselingMapper">
+
+    <resultMap id="counselingResultMap" type="com.tencent.wxcloudrun.model.Counseling">
+        <id property="id" column="id"/>
+        <result property="counselingId" column="counseling_id"/>
+        <result property="counselorId" column="counselor_id"/>
+        <result property="duration" column="duration"/>
+        <result property="fee" column="fee"/>
+        <result property="way" column="way"/>
+        <result property="effectStartDate" column="effect_start_date" javaType="java.time.LocalDateTime"/>
+        <result property="effectEndDate" column="effect_end_date" javaType="java.time.LocalDateTime"/>
+        <result property="extra" column="extra"/>
+        <result property="createTime" column="create_time" javaType="java.time.LocalDateTime"/>
+        <result property="updateTime" column="update_time" javaType="java.time.LocalDateTime"/>
+    </resultMap>
+
+    <select id="getCounselingByCounselorId" resultMap="counselingResultMap" parameterType="java.lang.String">
+        SELECT `id`, `counseling_id`, `counselor_id`, `duration`, `fee`, `way`, `effect_start_date`, `effect_end_date`, `extra`, `create_time`, `update_time`
+        FROM counseling
+        WHERE counselor_id = #{counselorId}
+    </select>
+
+    <insert id="createCounseling" parameterType="com.tencent.wxcloudrun.model.Counseling">
+        INSERT INTO counseling (counseling_id, counselor_id, duration, fee, way, effect_start_date, effect_end_date, extra)
+        VALUES (#{counselingId}, #{counselorId}, #{duration}, #{fee}, #{way}, #{effectStartDate}, #{effectEndDate}, #{extra})
+    </insert>
+
+    <update id="updateCounseling" parameterType="com.tencent.wxcloudrun.model.Counseling">
+        UPDATE counseling SET counseling_id = #{counselingId}, counselor_id = #{counselorId}, duration = #{duration}, fee = #{fee}, way = #{way}, effect_start_date = #{effectStartDate}, effect_end_date = #{effectEndDate}, extra = #{extra} WHERE id = #{id}
+    </update>
+
+    <delete id="deleteCounseling" parameterType="java.lang.String">
+        DELETE FROM counseling WHERE id = #{counselingId}
+    </delete>
+
+</mapper>

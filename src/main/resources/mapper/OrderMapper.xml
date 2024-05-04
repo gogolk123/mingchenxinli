@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tencent.wxcloudrun.dao.OrderMapper">
+
+    <resultMap id="OrderResultMap" type="com.tencent.wxcloudrun.model.Order">
+        <result column="id" property="id" javaType="java.lang.Long"/>
+        <result column="order_id" property="orderId" javaType="java.lang.String"/>
+        <result column="userId" property="duration" javaType="java.lang.Integer"/>
+
+        <result column="duration" property="duration" javaType="java.lang.Integer"/>
+        <result column="fee" property="fee" javaType="java.lang.Integer"/>
+        <result column="way" property="way" javaType="java.lang.Integer"/>
+        <result column="unit_period_key" property="unitPeriodKey" javaType="java.lang.String"/>
+        <result column="visitor_id" property="visitorId" javaType="java.lang.String"/>
+        <result column="counselor_id" property="counselorId" javaType="java.lang.String"/>
+        <result column="biz_date" property="bizDate" javaType="java.time.LocalDateTime"/>
+        <result column="status" property="status" javaType="java.lang.Integer"/>
+        <result column="extra" property="extra" javaType="java.lang.String"/>
+        <result column="create_time" property="createTime" javaType="java.time.LocalDateTime"/>
+        <result column="update_time" property="updateTime" javaType="java.time.LocalDateTime"/>
+    </resultMap>
+
+    <select id="queryOrderListByUserId" resultMap="OrderResultMap">
+        SELECT id, order_id, user_id, duration, fee, way, unit_period_key, visitor_id, counselor_id, biz_date, status, extra, create_time, update_time FROM order_base WHERE user_id = #{userId}
+    </select>
+
+    <select id="getOrderByOrderId" resultMap="OrderResultMap">
+        SELECT id, order_id, user_id, duration, fee, way, unit_period_key, visitor_id, counselor_id, biz_date, status, extra, create_time, update_time FROM order_base WHERE order_id = #{orderId}
+    </select>
+
+    <insert id="createOrder" parameterType="com.tencent.wxcloudrun.model.Order">
+        INSERT INTO order_base (order_id, user_id, duration, fee, way, unit_period_key, visitor_id, counselor_id, biz_date, status, extra)
+        VALUES (#{orderId}, #{duration}, #{fee}, #{way}, #{unitPeriodKey}, #{visitorId}, #{counselorId}, #{bizDate}, #{status}, #{extra})
+    </insert>
+
+    <update id="updateOrder"  parameterType="com.tencent.wxcloudrun.model.Order">
+        UPDATE order_base SET user_id = #{userId}, duration = #{duration}, fee = #{fee}, way = #{way}, unit_period_key = #{unitPeriodKey}, visitor_id = #{visitorId}, counselor_id = #{counselorId}, biz_date = #{bizDate}, status = #{status}, extra = #{extra} WHERE order_id = #{orderId}
+    </update>
+
+    <update id="updateOrderStatus">
+        UPDATE order_base SET status = #{status} WHERE order_id = #{orderId}
+    </update>
+
+    <delete id="deleteOrder">
+        DELETE FROM order_base WHERE order_id = #{orderId}
+    </delete>
+
+</mapper>

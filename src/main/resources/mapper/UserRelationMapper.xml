@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tencent.wxcloudrun.dao.UserRelationMapper">
+
+    <resultMap id="userRelationResultMap" type="com.tencent.wxcloudrun.model.UserRelation">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="outId" column="out_id"/>
+        <result property="outIdType" column="out_id_type"/>
+        <result property="createTime" column="create_time" javaType="java.time.LocalDateTime"/>
+        <result property="updateTime" column="update_time" javaType="java.time.LocalDateTime"/>
+    </resultMap>
+
+    <select id="getUserRelationByOutId" resultMap="userRelationResultMap">
+        SELECT user_id, out_id, out_id_type, create_time, update_time FROM user_relation WHERE out_id = #{outId}
+    </select>
+
+    <insert id="createUserRelation" parameterType="com.tencent.wxcloudrun.model.UserRelation">
+        INSERT INTO user_relation (user_id, out_id, out_id_type)
+        VALUES (#{userId}, #{outId}, #{outIdType})
+    </insert>
+
+    <update id="updateUserRelation" parameterType="com.tencent.wxcloudrun.model.UserRelation">
+        UPDATE user_relation SET out_id = #{outId}, out_id_type = #{outIdType} WHERE user_id = #{userId}
+    </update>
+
+    <delete id="deleteUserRelation" parameterType="java.lang.String">
+        DELETE FROM user_relation WHERE user_id = #{userId}
+    </delete>
+
+</mapper>
