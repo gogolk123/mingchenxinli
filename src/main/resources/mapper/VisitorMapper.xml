@@ -4,7 +4,7 @@
     <resultMap id="visitorMap" type="com.tencent.wxcloudrun.model.Visitor">
         <id property="id" column="id" javaType="java.lang.Integer"/>
         <result property="visitorId" column="visitor_id" javaType="java.lang.String"/>
-        <result property="userId" column="user_id" javaType="java.lang.Integer"/>
+        <result property="userId" column="user_id"/>
         <result property="name" column="name" javaType="java.lang.String"/>
         <result property="phone" column="phone" javaType="java.lang.String"/>
         <result property="born" column="born" javaType="java.lang.String"/>
@@ -15,7 +15,7 @@
         <result property="updateTime" column="update_time" javaType="java.time.LocalDateTime"/>
     </resultMap>
 
-    <select id="queryVisitorListByOutId" resultMap="visitorMap">
+    <select id="queryVisitorListByUserId" resultMap="visitorMap">
         SELECT id, visitor_id, user_id, name, phone, born, gender, is_first_visit, extra, create_time, update_time FROM Visitor WHERE user_id = #{userId}
     </select>
     <select id="getVisitorByVisitorId" resultMap="visitorMap">

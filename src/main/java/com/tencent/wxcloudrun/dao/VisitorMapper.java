@@ -18,7 +18,7 @@ public interface VisitorMapper {
 
     void deleteVisitor(@Param("visitorId") String visitorId);
 
-    List<Visitor> queryVisitorListByUserId(@Param("userId") Integer userId);
+    List<Visitor> queryVisitorListByUserId(@Param("userId") long userId);
 
 
 }

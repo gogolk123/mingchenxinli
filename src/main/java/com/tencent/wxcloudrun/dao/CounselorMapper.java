@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper
 public interface CounselorMapper {
 
-    List<Counselor> getCounselorByUserId(@Param("userId") BigInteger userId);
+    List<Counselor> getCounselorByUserId(@Param("userId") long userId);
 
     Counselor getCounselorByCounselorId(@Param("counselorId") String counselorId);
 

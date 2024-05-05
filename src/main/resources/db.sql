@@ -96,3 +96,22 @@ CREATE TABLE `order_base` (
                                                                `biz_date`
                                   )
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8 COMMENT = '订单表';
+
+
+CREATE TABLE `visitor` (
+                           `id` bigint unsigned NOT NULL COMMENT 'Id',
+                           `visitor_id` varchar(64)  NOT NULL DEFAULT '' COMMENT '来访者id',
+                           `user_id` bigint NOT NULL DEFAULT 0 COMMENT '用户id',
+                           `name` varchar(64)  NOT NULL COMMENT '名字',
+                           `phone` varchar(128)  NOT NULL COMMENT '电话',
+                           `born` varchar(256)  NOT NULL COMMENT '出生日期',
+                           `gender` varchar(256)  NOT NULL COMMENT '性别',
+                           `is_first_visit` text  COMMENT '是否首次来访',
+                           `extra` text  COMMENT '扩展字段',
+                           `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                           `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                           PRIMARY KEY (`id`),
+                           UNIQUE KEY `uk_visitor_id` (`visitor_id`),
+                           KEY `user_id` (`user_id`)
+
+) ENGINE = InnoDB DEFAULT CHARSET = utf8 COMMENT = '来访者表'

@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class User implements Serializable {
 
   private Integer id;
-  private BigInteger userId;
+  private long userId;
   private String extra;
 
   private LocalDateTime createTime;

@@ -13,7 +13,7 @@ public interface OrderService {
   /*
   用户Id查询订单,一般用于访客视角
    */
-  List<Order> queryOrderListByUserId(BigInteger userId);
+  List<Order> queryOrderListByUserId(long userId, String cursor, Integer count);
   /*
   咨询师查询订单
    */

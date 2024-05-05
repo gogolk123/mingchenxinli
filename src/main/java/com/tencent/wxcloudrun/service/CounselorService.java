@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface CounselorService {
 
-  Optional<Counselor> getCounselorByUserId(BigInteger userId);
+  Optional<Counselor> getCounselorByUserId(long userId);
   Optional<Counselor> getCounselorByCounselorId(String counselorId);
 
   void createCounselor(Counselor counselor);

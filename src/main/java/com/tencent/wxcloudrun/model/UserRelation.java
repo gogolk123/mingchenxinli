@@ -14,7 +14,7 @@ public class UserRelation implements Serializable {
 
   private String outId;
   private Integer outIdType;
-  private BigInteger userId;
+  private long userId;
   private String extra;
 
   private LocalDateTime createTime;

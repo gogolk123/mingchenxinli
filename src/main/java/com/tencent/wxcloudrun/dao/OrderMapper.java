@@ -18,7 +18,7 @@ public interface OrderMapper {
 
     void deleteOrder(@Param("orderId") String orderId);
 
-    List<Order> queryOrderListByUserId(@Param("userId") BigInteger userId);
+    List<Order> queryOrderListByUserId(@Param("userId") long userId, @Param("cursor") String cursor,@Param("count") Integer count );
     List<Order> queryOrderListByCounselorId(@Param("counselorId") String counselorId);
 
     void updateOrderStatus(@Param("orderId") String orderId, Integer status);

@@ -22,7 +22,7 @@
     </resultMap>
 
     <select id="queryOrderListByUserId" resultMap="OrderResultMap">
-        SELECT id, order_id, user_id, duration, fee, way, unit_period_key, visitor_id, counselor_id, biz_date, status, extra, create_time, update_time FROM order_base WHERE user_id = #{userId}
+        SELECT id, order_id, user_id, duration, fee, way, unit_period_key, visitor_id, counselor_id, biz_date, status, extra, create_time, update_time FROM order_base WHERE user_id = #{userId} and unit_period_key > #{cursor} order by unit_period_key desc limit  #{count}
     </select>
 
     <select id="getOrderByOrderId" resultMap="OrderResultMap">

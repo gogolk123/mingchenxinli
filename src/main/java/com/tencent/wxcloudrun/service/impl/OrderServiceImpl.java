@@ -46,8 +46,8 @@ public class OrderServiceImpl implements OrderService {
   }
 
   @Override
-  public List<Order> queryOrderListByUserId(BigInteger userId) {
-    return orderMapper.queryOrderListByUserId(userId);
+  public List<Order> queryOrderListByUserId(long userId, String cursor, Integer count) {
+    return orderMapper.queryOrderListByUserId(userId, cursor, count );
   }
 
   @Override

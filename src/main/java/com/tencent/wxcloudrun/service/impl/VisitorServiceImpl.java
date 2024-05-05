@@ -20,7 +20,7 @@ public class VisitorServiceImpl implements VisitorService {
   }
 
   @Override
-  public List<Visitor> queryVisitorListByUserId(Integer userId) {
+  public List<Visitor> queryVisitorListByUserId(long userId) {
     return visitorMapper.queryVisitorListByUserId(userId);
   }
 

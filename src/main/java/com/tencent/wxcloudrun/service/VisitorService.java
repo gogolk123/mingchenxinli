@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface VisitorService {
 
-  List<Visitor> queryVisitorListByUserId(Integer userId);
+  List<Visitor> queryVisitorListByUserId(long userId);
   Optional<Visitor> getVisitorByVisitorId(String visitorId);
   void createVisitor(Visitor visitor);
   void updateVisitor(Visitor visitor);
