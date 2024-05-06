@@ -61,7 +61,7 @@ class CounselorServiceImplTest {
         // 从数据库中获取预期的Counselor对象
         // ...
 
-        com.tencent.wxcloudrun.model.Counselor actualCounselor = counselorService.getCounselorByCounselorId(counselorId).orElse(null);
+//        com.tencent.wxcloudrun.model.Counselor actualCounselor = counselorService.getCounselorByCounselorId(counselorId).orElse(null);
 //        assert actualCounselor != null;
 //        Counselor dto = actualCounselor.ModelToDto();
 

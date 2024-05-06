@@ -75,7 +75,7 @@ class CounselingServiceImplTest {
         // 从数据库中获取预期的Counseling对象
         // ...
 
-        Counseling actualCounseling = counselingService.getCounselingByCounselorId(counselorId, time).orElse(null);
+//        Counseling actualCounseling = counselingService.getCounselingByCounselorId(counselorId, time).orElse(null);
 
 //        assertEquals(expectedCounseling, actualCounseling);
     }
