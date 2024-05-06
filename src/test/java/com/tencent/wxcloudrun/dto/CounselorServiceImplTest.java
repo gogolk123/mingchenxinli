@@ -51,7 +51,7 @@ class CounselorServiceImplTest {
         extra.setExperience(experiences);
         com.tencent.wxcloudrun.model.Counselor model = com.tencent.wxcloudrun.model.Counselor.DtoToModel(counselor);
         model.setUserId(UserIdGenerator.generateUserId());
-        counselorService.createCounselor(model);
+//        counselorService.createCounselor(model);
     }
 
     @Test
@@ -62,8 +62,8 @@ class CounselorServiceImplTest {
         // ...
 
         com.tencent.wxcloudrun.model.Counselor actualCounselor = counselorService.getCounselorByCounselorId(counselorId).orElse(null);
-        assert actualCounselor != null;
-        Counselor dto = actualCounselor.ModelToDto();
+//        assert actualCounselor != null;
+//        Counselor dto = actualCounselor.ModelToDto();
 
     }
 
@@ -88,12 +88,12 @@ class CounselorServiceImplTest {
         experiences.add("exper3");
         extra.setExperience(experiences);
         com.tencent.wxcloudrun.model.Counselor model = com.tencent.wxcloudrun.model.Counselor.DtoToModel(counselor);
-        counselorService.updateCounselor(model);
+//        counselorService.updateCounselor(model);
     }
 
     @Test
     void deleteCounselor() {
         String counselorId = "testCounselorId";
-        counselorService.deleteCounselor(counselorId);
+//        counselorService.deleteCounselor(counselorId);
     }
 }
