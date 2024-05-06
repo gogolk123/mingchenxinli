@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.HashMap;
 
 @Data
-public final class ApiResponse {
+public final class ApiResponse extends Throwable {
 
   private Integer code;
   private String error_msg;

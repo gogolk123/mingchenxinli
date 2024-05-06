@@ -24,13 +24,14 @@ public class Counselor implements Serializable {
   private LocalDateTime updateTime;
 
   public  com.tencent.wxcloudrun.dto.Counselor ModelToDto() throws JsonProcessingException {
-    ObjectMapper mapper = new ObjectMapper();
 
     com.tencent.wxcloudrun.dto.Counselor counselorDTO = new com.tencent.wxcloudrun.dto.Counselor();
     counselorDTO.setCounselor_id(this.counselorId);
     counselorDTO.setName(this.name);
     counselorDTO.setEdu(this.edu);
     counselorDTO.setAddress(this.address);
+    ObjectMapper mapper = new ObjectMapper();
+
     CounselorExtra counselorExtra = mapper.readValue(this.extra, CounselorExtra.class);
 
     counselorDTO.setExtra(counselorExtra);

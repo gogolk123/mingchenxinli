@@ -1,21 +1,24 @@
 package com.tencent.wxcloudrun.model;
 
+import com.tencent.wxcloudrun.utils.DateUtil;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Data
 public class Order implements Serializable {
-
   private Integer id;
   private String orderId;
   private String duration;
   private Integer fee;
   private Integer way;
   private Integer status;
-  private BigInteger userId;
+  private long userId;
 
   private String unitPeriodKey;
 
@@ -27,21 +30,33 @@ public class Order implements Serializable {
   private LocalDateTime createTime;
   private LocalDateTime updateTime;
 
-  public  com.tencent.wxcloudrun.dto.Order ModelToDto() {
-    com.tencent.wxcloudrun.dto.Order visitor = new com.tencent.wxcloudrun.dto.Order();
+  public com.tencent.wxcloudrun.dto.OrderBase ModelToOrderBase() {
     com.tencent.wxcloudrun.dto.OrderBase orderBase = new com.tencent.wxcloudrun.dto.OrderBase();
     orderBase.setOrder_id(this.orderId);
     //order_date 位LocalDateTime转换成的x月x日(星期x) 格式
+    orderBase.setOrder_date(this.GetDate());
+    orderBase.setPeriod(this.GetPeriod());
+    orderBase.setSeq(this.GetSeq());
+    orderBase.setPeriod_key(this.unitPeriodKey);
+    return orderBase;
+  }
 
-    orderBase.setOrder_date(this.bizDate.toString());
+  public String GetPeriod() {
+    String[] period =  this.unitPeriodKey.split("_");
+   return DateUtil.TimeToPeriodName(period[1]);
+  }
 
+  public String GetDate() {
+    String[] period =  this.unitPeriodKey.split("_");
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM月dd日(EEE)");
+    return LocalDateTime.parse(period[0], DateTimeFormatter.ofPattern("yyyy-MM-dd")).format(formatter);
+  }
 
-
-
-
-
-    visitor.setOrder_base(this.orderId);
-
-    return visitor;
+  public String GetSeq() {
+    String[] period =  this.unitPeriodKey.split("_");
+    return period[3];
+  }
 }
+
+
 

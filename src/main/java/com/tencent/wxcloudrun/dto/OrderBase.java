@@ -8,4 +8,6 @@ public class OrderBase {
     private String order_date; // Order date
     private String period; // Period of the day
     private String seq; // Sequence
+    private String period_key; // period_key
+
 }

@@ -3,10 +3,12 @@ package com.tencent.wxcloudrun.service.impl;
 import com.tencent.wxcloudrun.dao.OrderMapper;
 import com.tencent.wxcloudrun.model.Order;
 import com.tencent.wxcloudrun.service.OrderService;
+import org.apache.ibatis.session.SqlSessionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +28,7 @@ public class OrderServiceImpl implements OrderService {
   }
 
   @Override
-  public void createOrder(Order order) {
+  public void createOrder(Order order) throws SqlSessionException {
     orderMapper.createOrder(order);
   }
 
@@ -51,7 +53,13 @@ public class OrderServiceImpl implements OrderService {
   }
 
   @Override
-  public List<Order> queryOrderListByCounselorId(String counselorId) {
-    return orderMapper.queryOrderListByCounselorId(counselorId);
+  public List<Order> queryOrderListByCounselorId(String counselorId, LocalDateTime startTime, LocalDateTime endTime) {
+    return orderMapper.queryOrderListByCounselorId(counselorId, startTime, endTime);
   }
+  @Override
+  public  Optional<Order> queryOrderByCounselorIdAndPeriodKey( String counselorId, String unitPeriodKey)  {
+    return Optional.ofNullable(orderMapper.queryOrderByCounselorIdAndPeriodKey(counselorId, unitPeriodKey));
+  }
+
+
 }
