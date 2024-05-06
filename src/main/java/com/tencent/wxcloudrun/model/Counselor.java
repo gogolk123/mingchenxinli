@@ -14,7 +14,7 @@ public class Counselor implements Serializable {
 
   private Integer id;
   private String counselorId;
-  private BigInteger userId;
+  private long userId;
 
   private String name;
   private String edu;
@@ -36,6 +36,20 @@ public class Counselor implements Serializable {
 
     counselorDTO.setExtra(counselorExtra);
     return counselorDTO;
+  }
+
+
+  public static Counselor DtoToModel(com.tencent.wxcloudrun.dto.Counselor counselor) throws JsonProcessingException {
+
+    Counselor counselorModel = new Counselor();
+    counselorModel.setCounselorId(counselor.getCounselor_id());
+    counselorModel.setName(counselor.getName());
+    counselorModel.setEdu(counselor.getEdu());
+    counselorModel.setAddress(counselor.getAddress());
+    ObjectMapper objectMapper = new ObjectMapper();
+    String json = objectMapper.writeValueAsString(counselor.getExtra());
+    counselorModel.setExtra(json);
+    return counselorModel;
   }
 }
 

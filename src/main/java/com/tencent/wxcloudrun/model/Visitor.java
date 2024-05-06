@@ -31,7 +31,7 @@ public class Visitor implements Serializable {
     visitor.setGender(this.gender);
     visitor.setBorn(this.born);
     visitor.setPhone(this.phone);
-    visitor.set_first_visit(this.isFirstVisit);
+    visitor.setIs_first_visit(this.isFirstVisit);
     return visitor;
   };
 

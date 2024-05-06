@@ -9,6 +9,7 @@ import com.tencent.wxcloudrun.service.OrderService;
 import com.tencent.wxcloudrun.utils.DateUtil;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -22,12 +23,15 @@ public class DayPeriod {
         DayPeriod dayPeriod= new DayPeriod();
         dayPeriod.setDate(time);
         dayPeriod.setTime_period_list(new ArrayList<>());
-        LocalDateTime t =  LocalDateTime.parse(time, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        Optional<Counseling> counseling = counselingService.getCounselingByCounselorId(counselorId, DateUtil.dateToTime(time));
+        LocalDateTime t = DateUtil.dateToTime(time);
+        Optional<Counseling> counseling = counselingService.getCounselingByCounselorId(counselorId, t);
+        if (!counseling.isPresent()){
+           throw new Exception();
+        }
         List<Order> orderList =  orderService.queryOrderListByCounselorId(counselorId, t, t);
         Map<String,Boolean> haveOrder = new HashMap<>();
         for (Order order : orderList){
-            haveOrder.put(order.getUnitPeriodKey(), true);
+            haveOrder.put(order.getUnitPeriodKey(), Boolean.TRUE);
         }
         ObjectMapper mapper = new ObjectMapper();
         try {
@@ -51,9 +55,9 @@ public class DayPeriod {
                             String.valueOf(i),
                     };
                     unitPeriod.setKey(String.join("_", l));
-                    unitPeriod.set_available(true);
-                    if (haveOrder.get(unitPeriod.getKey())) {
-                        unitPeriod.set_available(false);
+                    unitPeriod.setIs_available(true);
+                    if (haveOrder.get(unitPeriod.getKey()) != null && haveOrder.get(unitPeriod.getKey())) {
+                        unitPeriod.setIs_available(false);
                     }
                     timePeriod.getUnit_period_list().add(unitPeriod);
                 }
@@ -61,7 +65,7 @@ public class DayPeriod {
             }
 
         } catch (Exception e ){
-            throw new Exception("系统错误，请稍后再试");
+            throw e;
         }
         return dayPeriod;
     }

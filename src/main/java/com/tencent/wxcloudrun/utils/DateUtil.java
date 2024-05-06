@@ -1,5 +1,6 @@
 package com.tencent.wxcloudrun.utils;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -7,7 +8,8 @@ import java.util.UUID;
 
 public class DateUtil {
     public static LocalDateTime dateToTime(String time) {
-        return LocalDateTime.parse(time, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        return   LocalDate.parse(time).atStartOfDay();
+
     }
 
     public static String TimeToPeriodName(String timeStr) {

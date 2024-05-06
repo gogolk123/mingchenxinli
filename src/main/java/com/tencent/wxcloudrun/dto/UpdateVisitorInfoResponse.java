@@ -4,5 +4,4 @@ import lombok.Data;
 
 @Data
 public class UpdateVisitorInfoResponse {
-    private BaseResponse base_resp;
 }

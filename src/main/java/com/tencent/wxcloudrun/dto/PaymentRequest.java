@@ -1,6 +1,11 @@
 package com.tencent.wxcloudrun.dto;
 
-public class PaymentRequest {
+import lombok.Data;
+
+import java.io.Serializable;
+
+@Data
+public class PaymentRequest implements Serializable {
     private String body;
     private String openid;
     private String out_trade_no;
@@ -26,7 +31,8 @@ public class PaymentRequest {
     // getters and setters
 }
 
-class Container {
+@Data
+class Container implements Serializable {
     private String service;
     private String path;
 

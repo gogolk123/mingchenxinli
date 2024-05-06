@@ -14,7 +14,7 @@ import java.util.List;
 public class Order implements Serializable {
   private Integer id;
   private String orderId;
-  private String duration;
+  private Integer duration;
   private Integer fee;
   private Integer way;
   private Integer status;

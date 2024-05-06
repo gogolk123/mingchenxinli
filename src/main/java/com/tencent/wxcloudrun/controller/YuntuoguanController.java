@@ -68,7 +68,7 @@ public class YuntuoguanController {
    * @return API response json
    */
   @GetMapping(value = "/yuntuoguan/getCounselorInfo")
-  ApiResponse getCounselorInfo(@RequestHeader HttpHeaders header, @RequestBody GetCounselorInfoRequest request)   {
+  ApiResponse getCounselorInfo(@RequestHeader HttpHeaders header, @ModelAttribute GetCounselorInfoRequest request)   {
     logger.info("/yuntuoguan/getCounselorInfo get request {}", request);
     GetCounselorInfoResponse resp = new GetCounselorInfoResponse();
     try {
@@ -85,6 +85,12 @@ public class YuntuoguanController {
       counselorDto.setFee(counseling.get().getFee());
       counselorDto.setDuration(counseling.get().getDuration());
       counselorDto.setFee(counseling.get().getFee());
+      List<CounselingWay> ways = new ArrayList<>();
+      CounselingWay way = new CounselingWay();
+      way.setWay(counseling.get().getWay());
+      way.setWay_str("线上视频");
+      ways.add(way);
+      counselorDto.setWay_list(ways);
       resp.setInfo(counselorDto);
     } catch (Exception e) {
       logger.error("/yuntuoguan/getCounselorInfo post fail,err:{}",e.getMessage());
@@ -106,9 +112,8 @@ public class YuntuoguanController {
 
     String openId = header.getFirst(openIdStr);
     try {
-      Optional<UserRelation> userRelation = this.userRelationService.getUserRelationByOutId(openId, NumOutIdType.ONE.getValue());
       long userId;
-      userId = getUserId(userRelation);
+      userId = getUserId(openId,NumOutIdType.ONE);
       List<com.tencent.wxcloudrun.model.Visitor> visitorModelList = this.visitorService.queryVisitorListByUserId(userId);
       List<com.tencent.wxcloudrun.dto.Visitor> visitorList = new ArrayList<>();
 
@@ -124,7 +129,8 @@ public class YuntuoguanController {
     return ApiResponse.ok(resp);
   }
 
-  private long getUserId(Optional<UserRelation> userRelation) {
+  private long getUserId(String outId, NumOutIdType outIdType) {
+    Optional<UserRelation> userRelation = this.userRelationService.getUserRelationByOutId(outId, outIdType.getValue());
     long userId;
     if (userRelation.isPresent()) {
       //存在
@@ -136,6 +142,12 @@ public class YuntuoguanController {
       user.setUserId(userId);
       user.setExtra("");
       this.userService.createUser(user);
+      UserRelation newRelation = new UserRelation();
+      newRelation.setRelationId("R" + UserIdGenerator.generateUserId());
+      newRelation.setUserId(userId);
+      newRelation.setOutId(outId);
+      newRelation.setOutIdType(outIdType.getValue());
+      this.userRelationService.createUserRelation(newRelation);
     }
     return userId;
   }
@@ -153,18 +165,8 @@ public class YuntuoguanController {
     AddVisitorInfoResponse resp = new AddVisitorInfoResponse();
     try {
       String openId = header.getFirst(openIdStr);
-      Optional<UserRelation> userRelation = this.userRelationService.getUserRelationByOutId(openId, NumOutIdType.ONE.getValue());
-      long userId;
-      if (userRelation.isPresent()) {
-        //存在
-        userId = userRelation.get().getUserId();
-      } else {
-        User user = new User();
-        userId = UserIdGenerator.generateUserId();
-        user.setUserId(userId);
-        user.setExtra("");
-        this.userService.createUser(user);
-      }
+      long userId = getUserId(openId,NumOutIdType.ONE);
+
       Visitor visitor = request.getInfo();
       com.tencent.wxcloudrun.model.Visitor visitorModel = visitor.dtoToModel();
       visitorModel.setUserId(userId);
@@ -217,7 +219,7 @@ public class YuntuoguanController {
    * @return API response json
    */
   @GetMapping(value = "/yuntuoguan/queryAvailableTime")
-  ApiResponse queryAvailableTime(@RequestHeader HttpHeaders header, @RequestBody QueryAvailableTimeRequest request) {
+  ApiResponse queryAvailableTime(@RequestHeader HttpHeaders header, @ModelAttribute QueryAvailableTimeRequest request) {
     logger.info("/yuntuoguan/queryAvailableTime get request, request: {}", request);
     QueryAvailableTimeResponse resp = new QueryAvailableTimeResponse();
     try {
@@ -246,23 +248,14 @@ public class YuntuoguanController {
  * @return API response json
  */
 @GetMapping(value = "/yuntuoguan/queryOrderList")
-ApiResponse queryOrderList(@RequestHeader HttpHeaders header, @RequestBody QueryOrderListRequest request) {
+ApiResponse queryOrderList(@RequestHeader HttpHeaders header, @ModelAttribute QueryOrderListRequest request) {
   logger.info("/yuntuoguan/queryOrderList get request, request: {}", request);
   QueryOrderListResponse resp = new QueryOrderListResponse();
   try {
     String openId = header.getFirst(openIdStr);
-    Optional<UserRelation> userRelation = this.userRelationService.getUserRelationByOutId(openId, NumOutIdType.ONE.getValue());
-    long userId;
-    if (userRelation.isPresent()) {
-      //存在
-      userId = userRelation.get().getUserId();
-    } else {
-      User user = new User();
-      userId = UserIdGenerator.generateUserId();
-      user.setUserId(userId);
-      user.setExtra("");
-      this.userService.createUser(user);
-    }
+    long userId = getUserId(openId,NumOutIdType.ONE);
+
+
     List<com.tencent.wxcloudrun.model.Order> orderModelList = this.orderService.queryOrderListByUserId(userId, request.getCursor(), request.getCount());
     List<com.tencent.wxcloudrun.model.Visitor> visitorList = this.visitorService.queryVisitorListByUserId(userId);
     Map<String, com.tencent.wxcloudrun.model.Visitor> map = new HashMap<>();
@@ -309,10 +302,9 @@ ApiResponse queryOrderList(@RequestHeader HttpHeaders header, @RequestBody Query
     //获取openID
     //openId获取用户id
     CreateOrderResponse resp = new CreateOrderResponse();
-    String openId = header.getFirst(openIdStr);
     try {
-      Optional<UserRelation> userRelation = this.userRelationService.getUserRelationByOutId(openId, NumOutIdType.ONE.getValue());
-      long userId = getUserId(userRelation);
+      String openId = header.getFirst(openIdStr);
+      long userId = getUserId(openId,NumOutIdType.ONE);
       Optional<com.tencent.wxcloudrun.model.Order> orderDto = this.orderService.queryOrderByCounselorIdAndPeriodKey(request.getCounselor_id(), request.getUnit_period_key());
       if (orderDto.isPresent()) {
         return ApiResponse.error("很抱歉，该预约时间已被预约，请重新预约");
@@ -333,8 +325,10 @@ ApiResponse queryOrderList(@RequestHeader HttpHeaders header, @RequestBody Query
     order.setCreateTime(LocalDateTime.now());
     order.setUpdateTime(LocalDateTime.now());
     order.setWay(counseling.get().getWay());
-    order.setFee(counseling.get().getFee());
-    order.setBizDate(LocalDateTime.parse(request.getUnit_period_key().split("_")[0] + DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+    order.setDuration(counseling.get().getDuration());
+
+      order.setFee(counseling.get().getFee());
+    order.setBizDate(DateUtil.dateToTime(request.getUnit_period_key().split("_")[0]));
       this.orderService.createOrder(order);
 
     resp.setOrder_id(order.getOrderId());
@@ -351,7 +345,7 @@ ApiResponse queryOrderList(@RequestHeader HttpHeaders header, @RequestBody Query
       String json = objectMapper.writeValueAsString(paymentReq);
       String response = OkHttpClient.syncPost(url, json);
       ObjectMapper objectMapper2 = new ObjectMapper();
-      WechatPaymentResponse wechatPaymentResponse = objectMapper2.readValue(json, WechatPaymentResponse.class);
+      WechatPaymentResponse wechatPaymentResponse = objectMapper2.readValue(response, WechatPaymentResponse.class);
       resp.setOrder_id(orderId);
       RequestPaymentRequest requestPaymentRequest = getRequestPaymentRequest(wechatPaymentResponse);
       resp.setRequestPaymentRequest(requestPaymentRequest);

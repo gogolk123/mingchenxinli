@@ -21,7 +21,7 @@ public interface OrderMapper {
     void deleteOrder(@Param("orderId") String orderId);
 
     List<Order> queryOrderListByUserId(@Param("userId") long userId, @Param("cursor") String cursor,@Param("count") Integer count );
-    List<Order> queryOrderListByCounselorId(@Param("counselorId") String counselorId, @Param("starTime") LocalDateTime starTime, @Param("endTime") LocalDateTime endTime);
+    List<Order> queryOrderListByCounselorId(@Param("counselorId") String counselorId, @Param("startTime") LocalDateTime starTime, @Param("endTime") LocalDateTime endTime);
     Order queryOrderByCounselorIdAndPeriodKey(@Param("counselorId") String counselorId, @Param("unitPeriodKey") String unitPeriodKey);
 
     void updateOrderStatus(@Param("orderId") String orderId, Integer status);

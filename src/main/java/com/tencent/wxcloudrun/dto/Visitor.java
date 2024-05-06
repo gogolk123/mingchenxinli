@@ -9,7 +9,7 @@ public class Visitor {
     private String gender; // Gender
     private String born; // Birth date
     private String phone; // Phone number
-    private boolean is_first_visit; // Is first visit
+    private Boolean is_first_visit; // Is first visit
 
     public com.tencent.wxcloudrun.model.Visitor dtoToModel() {
         com.tencent.wxcloudrun.model.Visitor visitor = new com.tencent.wxcloudrun.model.Visitor();
