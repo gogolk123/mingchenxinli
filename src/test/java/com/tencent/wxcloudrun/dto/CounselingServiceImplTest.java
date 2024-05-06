@@ -71,7 +71,7 @@ class CounselingServiceImplTest {
     void getCounselingByCounselorId() {
         String counselorId = "testCounselorId";
         LocalDateTime time = LocalDateTime.now();
-        Counseling expectedCounseling = new Counseling();
+//        Counseling expectedCounseling = new Counseling();
         // 从数据库中获取预期的Counseling对象
         // ...
 
