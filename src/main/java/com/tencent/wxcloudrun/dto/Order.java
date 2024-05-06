@@ -10,8 +10,6 @@ public class Order {
     private OrderBase order_base; // Order base information
     private String counselor_id; // Counselor ID
     private String visitor; // Visitor information
-
-
 }
 
 

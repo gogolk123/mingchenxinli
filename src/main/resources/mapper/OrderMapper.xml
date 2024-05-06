@@ -22,15 +22,15 @@
     </resultMap>
 
     <select id="queryOrderListByUserId" resultMap="OrderResultMap">
-        SELECT id, order_id, user_id, duration, fee, way, unit_period_key, visitor_id, counselor_id, biz_date, status, extra, create_time, update_time FROM order_base WHERE user_id = #{userId} and unit_period_key > #{cursor} order by unit_period_key limit  #{count}
+        SELECT id, order_id, user_id, duration, fee, way, unit_period_key, visitor_id, counselor_id, biz_date, status, extra, create_time, update_time FROM order_base WHERE user_id = #{userId} and unit_period_key > #{cursor} and status = 2 order by unit_period_key limit  #{count}
     </select>
 
     <select id="queryOrderByCounselorIdAndPeriodKey" resultMap="OrderResultMap">
-        SELECT id, order_id, user_id, duration, fee, way, unit_period_key, visitor_id, counselor_id, biz_date, status, extra, create_time, update_time FROM order_base WHERE counselor_id = #{counselorId} and unit_period_key = #{unitPeriodKey}
+        SELECT id, order_id, user_id, duration, fee, way, unit_period_key, visitor_id, counselor_id, biz_date, status, extra, create_time, update_time FROM order_base WHERE counselor_id = #{counselorId} and status = 2  and  unit_period_key = #{unitPeriodKey}
     </select>
 
     <select id="queryOrderListByCounselorId" resultMap="OrderResultMap">
-        SELECT id, order_id, user_id, duration, fee, way, unit_period_key, visitor_id, counselor_id, biz_date, status, extra, create_time, update_time FROM order_base WHERE counselor_id = #{counselorId} and  biz_date >=  #{startTime} and order_base.biz_date <![CDATA[<=]]> #{endTime}
+        SELECT id, order_id, user_id, duration, fee, way, unit_period_key, visitor_id, counselor_id, biz_date, status, extra, create_time, update_time FROM order_base WHERE counselor_id = #{counselorId}  and status = 2  and  biz_date >=  #{startTime} and order_base.biz_date <![CDATA[<=]]> #{endTime}
     </select>
 
     <select id="getOrderByOrderId" resultMap="OrderResultMap">
