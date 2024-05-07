@@ -40,6 +40,7 @@ public class OkHttpClient {
         Request request = new Request.Builder()
                 .url(url)
                 .post(body)
+                .addHeader("Content-Type", "application/json")
                 .build();
         try {
             Response response = OkHttpClient.getInstance().newCall(request).execute();
