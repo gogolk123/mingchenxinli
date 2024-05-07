@@ -5,7 +5,7 @@
 
 
     <resultMap id="OrderResultMap" type="com.tencent.wxcloudrun.model.Order">
-        <result column="id" property="id"/>
+        <id column="id" property="id"/>
         <result column="order_id" property="orderId" javaType="java.lang.String"/>
         <result column="user_id" property="userId" />
         <result column="duration" property="duration" javaType="java.lang.Integer"/>
