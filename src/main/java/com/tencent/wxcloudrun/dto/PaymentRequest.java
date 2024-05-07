@@ -17,6 +17,9 @@ public class PaymentRequest implements Serializable {
     private Container container;
 
     public PaymentRequest(String openid, String out_trade_no, String spbill_create_ip, int total_fee) {
+        if (spbill_create_ip.isEmpty()){
+            spbill_create_ip = "127.0.0.1";
+        }
         this.body = "咨询预约";
         this.openid = openid;
         this.out_trade_no = out_trade_no;
