@@ -8,7 +8,7 @@ import java.util.List;
 public class CounselorExtra {
     private String motto; // Motto
     private String genre; // Counseling genre
-    private String scope; // Counseling scope
+    private List<String> scope; // Counseling scope
     private List<String> experience; // Training experience
     // getters and setters
 }

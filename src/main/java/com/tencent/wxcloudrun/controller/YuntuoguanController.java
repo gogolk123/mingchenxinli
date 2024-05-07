@@ -42,7 +42,7 @@ public class YuntuoguanController {
 
   final Logger logger;
   String openIdStr = "X-WX-OPENID";
-  String ipStr = "X-Forwarded-For";
+  String ipStr = "x-original-forwarded-for";
   String systemErrorMsg = "抱歉，系统打瞌睡了，请稍后再试一试或联系咨询师";
 
   public YuntuoguanController(@Autowired CounselingService counselingService

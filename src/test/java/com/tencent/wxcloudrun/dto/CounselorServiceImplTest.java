@@ -43,8 +43,13 @@ class CounselorServiceImplTest {
         counselor.setExtra(extra);
         extra.setGenre("test_genre");
         extra.setMotto("test_motto");
-        extra.setScope("test_scope");
+        List<String> scopes = new ArrayList<>();
+        scopes.add("test_scope1");
+        scopes.add("test_scope2");
+
+        extra.setScope(scopes);
         List<String> experiences = new ArrayList<>();
+
         experiences.add("exper1");
         experiences.add("exper2");
         experiences.add("exper3");
@@ -81,8 +86,11 @@ class CounselorServiceImplTest {
         CounselorExtra extra = new CounselorExtra();
         extra.setGenre("test_genre");
         extra.setMotto("test_motto");
-        extra.setScope("test_scope");
-        List<String> experiences = new ArrayList<>();
+        List<String> scopes = new ArrayList<>();
+        scopes.add("test_scope1");
+        scopes.add("test_scope2");
+
+        extra.setScope(scopes);        List<String> experiences = new ArrayList<>();
         experiences.add("exper1");
         experiences.add("exper2");
         experiences.add("exper3");
