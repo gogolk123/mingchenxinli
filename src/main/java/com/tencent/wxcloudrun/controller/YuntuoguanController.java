@@ -69,7 +69,7 @@ public class YuntuoguanController {
    */
   @GetMapping(value = "/yuntuoguan/getCounselorInfo")
   ApiResponse getCounselorInfo(@RequestHeader HttpHeaders header, @ModelAttribute GetCounselorInfoRequest request)   {
-    logger.info("/yuntuoguan/getCounselorInfo get request {}", request);
+    logger.info("/yuntuoguan/getCounselorInfo get  header {}  request {}", header, request);
     GetCounselorInfoResponse resp = new GetCounselorInfoResponse();
     try {
       Optional<Counselor> counselor = this.counselorService.getCounselorByCounselorId(request.getId());
@@ -161,7 +161,7 @@ public class YuntuoguanController {
    */
   @PostMapping(value = "/yuntuoguan/addVisitorInfo")
   ApiResponse addVisitorInfo(@RequestHeader HttpHeaders header, @RequestBody AddVisitorInfoRequest request) {
-    logger.info("/yuntuoguan/addVisitorInfo get header {}", header);
+    logger.info("/yuntuoguan/addVisitorInfo get header {} request{}", header, request);
     AddVisitorInfoResponse resp = new AddVisitorInfoResponse();
     try {
       String openId = header.getFirst(openIdStr);
@@ -192,7 +192,7 @@ public class YuntuoguanController {
    */
   @PostMapping(value = "/yuntuoguan/updateVisitorInfo")
   ApiResponse update(@RequestHeader HttpHeaders header, @RequestBody AddVisitorInfoRequest request) {
-    logger.info("/yuntuoguan/updateVisitorInfo post request, request: {}", request);
+    logger.info("/yuntuoguan/updateVisitorInfo post header {} request{}", header, request);
     AddVisitorInfoResponse resp = new AddVisitorInfoResponse();
     try {
       Visitor visitor = request.getInfo();
@@ -220,7 +220,7 @@ public class YuntuoguanController {
    */
   @GetMapping(value = "/yuntuoguan/queryAvailableTime")
   ApiResponse queryAvailableTime(@RequestHeader HttpHeaders header, @ModelAttribute QueryAvailableTimeRequest request) {
-    logger.info("/yuntuoguan/queryAvailableTime get request, request: {}", request);
+    logger.info("/yuntuoguan/queryAvailableTime get header {} request{}", header, request);
     QueryAvailableTimeResponse resp = new QueryAvailableTimeResponse();
     try {
       DayPeriod dayPeriod = DayPeriod.getAvailablePeriod(request.getStart_date(), request.getCounselor_id(), counselingService, orderService);
@@ -249,7 +249,7 @@ public class YuntuoguanController {
  */
 @GetMapping(value = "/yuntuoguan/queryOrderList")
 ApiResponse queryOrderList(@RequestHeader HttpHeaders header, @ModelAttribute QueryOrderListRequest request) {
-  logger.info("/yuntuoguan/queryOrderList get request, request: {}", request);
+  logger.info("/yuntuoguan/queryOrderList get header {} request{}", header, request);
   QueryOrderListResponse resp = new QueryOrderListResponse();
   try {
     String openId = header.getFirst(openIdStr);
@@ -300,7 +300,7 @@ ApiResponse queryOrderList(@RequestHeader HttpHeaders header, @ModelAttribute Qu
    */
   @PostMapping(value = "/yuntuoguan/createOrder")
   ApiResponse createOrder(@RequestHeader HttpHeaders header, @RequestBody CreateOrderRequest request) {
-    logger.info("/yuntuoguan/createOrder post request, request: {}", request);
+    logger.info("/yuntuoguan/createOrder post header {} request{}", header, request);
     //获取openID
     //openId获取用户id
     CreateOrderResponse resp = new CreateOrderResponse();
@@ -380,7 +380,7 @@ ApiResponse queryOrderList(@RequestHeader HttpHeaders header, @ModelAttribute Qu
    */
   @PostMapping(value = "/yuntuoguan/wechatPaySuccessCallback")
   WxApiResponse create(@RequestHeader HttpHeaders header, @RequestBody WechatPaymentCallbackRequest request) {
-    logger.info("/yuntuoguan/wechatPaySuccessCallback post request, request: {}", request);
+    logger.info("/yuntuoguan/wechatPaySuccessCallback post header {} request{}", header, request);
     //获取openID
     //openId获取用户id
     //查看咨询师订单
