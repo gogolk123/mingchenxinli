@@ -276,7 +276,9 @@ ApiResponse queryOrderList(@RequestHeader HttpHeaders header, @ModelAttribute Qu
     }
     //获取访问者信息
     resp.setOrder_list(orderDtolList);
-    resp.setNext_cursor(orderDtolList.get(orderDtolList.size() - 1).getOrder_base().getPeriod_key());
+    if (!orderDtolList.isEmpty()) {
+      resp.setNext_cursor(orderDtolList.get(orderDtolList.size() - 1).getOrder_base().getPeriod_key());
+    }
   }catch (Exception e) {
     logger.error("/yuntuoguan/queryOrderList post fail,err: {}", e.getMessage());
     return ApiResponse.error(systemErrorMsg);
