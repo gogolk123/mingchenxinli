@@ -49,7 +49,7 @@ public class Order implements Serializable {
   public String GetDate() {
     String[] period =  this.unitPeriodKey.split("_");
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM月dd日(EEE)");
-    return LocalDateTime.parse(period[0], DateTimeFormatter.ofPattern("yyyy-MM-dd")).format(formatter);
+    return DateUtil.dateToTime(period[0]).format(formatter);
   }
 
   public String GetSeq() {

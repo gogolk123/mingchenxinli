@@ -25,7 +25,7 @@ public class PaymentRequest implements Serializable {
         this.sub_mch_id = "1675883558";
         this.total_fee = total_fee;
         this.callback_type = 2;
-        this.container = new Container("mingchen", "/yuntuoguan/wechatPaySuccessCallback");
+        this.container = new Container("mingchenxinli", "/yuntuoguan/wechatPaySuccessCallback");
     }
 
     // getters and setters
