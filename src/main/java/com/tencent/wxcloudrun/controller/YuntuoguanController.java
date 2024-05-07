@@ -339,7 +339,7 @@ ApiResponse queryOrderList(@RequestHeader HttpHeaders header, @ModelAttribute Qu
     //返回支付信息
     //返回订单信息
     PaymentRequest paymentReq = new PaymentRequest(openId, orderId, header.getFirst(ipStr), order.getFee());
-    String url = "http://api.weixin.qq.com/_/pay/unifiedorder";
+    String url = "http://api.weixin.qq.com/_/pay/unifiedOrder";
     /*
       paymentReq转换为json字符串
      */
