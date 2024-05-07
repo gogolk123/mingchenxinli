@@ -16,18 +16,18 @@
     </resultMap>
 
     <select id="queryVisitorListByUserId" resultMap="visitorMap">
-        SELECT id, visitor_id, user_id, name, phone, born, gender, is_first_visit, extra, create_time, update_time FROM Visitor WHERE user_id = #{userId}
+        SELECT id, visitor_id, user_id, name, phone, born, gender, is_first_visit, extra, create_time, update_time FROM visitor WHERE user_id = #{userId}
     </select>
     <select id="getVisitorByVisitorId" resultMap="visitorMap">
-        SELECT id, visitor_id, user_id, name, phone, born, gender, is_first_visit, extra, create_time, update_time FROM Visitor WHERE visitor_id = #{visitorId}
+        SELECT id, visitor_id, user_id, name, phone, born, gender, is_first_visit, extra, create_time, update_time FROM visitor WHERE visitor_id = #{visitorId}
     </select>
     <insert id="createVisitor" parameterType="com.tencent.wxcloudrun.model.Visitor" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO Visitor(visitor_id, user_id,  name, phone, born, gender, is_first_visit, extra) VALUES(#{visitorId}, #{userId}, #{name}, #{phone}, #{born}, #{gender}, #{isFirstVisit}, #{extra})
+        INSERT INTO visitor(visitor_id, user_id,  name, phone, born, gender, is_first_visit, extra) VALUES(#{visitorId}, #{userId}, #{name}, #{phone}, #{born}, #{gender}, #{isFirstVisit}, #{extra})
     </insert>
     <update id="updateVisitor" parameterType="com.tencent.wxcloudrun.model.Visitor">
-        UPDATE Visitor SET name = #{name}, phone = #{phone}, born = #{born}, gender = #{gender}, is_first_visit = #{isFirstVisit}, extra = #{extra} WHERE visitor_id = #{visitorId}
+        UPDATE visitor SET name = #{name}, phone = #{phone}, born = #{born}, gender = #{gender}, is_first_visit = #{isFirstVisit}, extra = #{extra} WHERE visitor_id = #{visitorId}
     </update>
     <delete id="deleteVisitor" parameterType="java.lang.String">
-        DELETE FROM Visitor WHERE visitor_id = #{visitorId}
+        DELETE FROM visitor WHERE visitor_id = #{visitorId}
     </delete>
 </mapper>
