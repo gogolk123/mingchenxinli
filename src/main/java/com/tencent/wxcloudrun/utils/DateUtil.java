@@ -15,7 +15,7 @@ public class DateUtil {
     public static String TimeToPeriodName(String timeStr) {
         LocalTime time = LocalTime.parse(timeStr);
         int hours = time.getHour();
-        if (hours > 18) {
+        if (hours >= 18) {
             return "晚上";
         }
         if (hours > 12) {
