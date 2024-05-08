@@ -29,9 +29,16 @@ class CounselingServiceImplTest {
     void setUp() {
         counselingService = new CounselingServiceImpl(counselingMapper);
     }
-
+    public String tuomin(String phone) {
+        if (phone != null && phone.length() == 11) {
+            phone = phone.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
+        }
+        return phone;
+    }
     @Test
     void createCounseling() throws JsonProcessingException {
+        String a = tuomin("18670067722");
+        
         Counseling counseling = new Counseling();
         // 设置counseling的属性
         // ...

@@ -118,7 +118,7 @@ public class YuntuoguanController {
       List<com.tencent.wxcloudrun.dto.Visitor> visitorList = new ArrayList<>();
 
       for (com.tencent.wxcloudrun.model.Visitor visitor : visitorModelList) {
-        visitorList.add(visitor.ModelToDto());
+        visitorList.add(visitor.ModelToDto(false));
       }
       resp.setInfo_list(visitorList);
     } catch (Exception e) {
@@ -222,8 +222,14 @@ public class YuntuoguanController {
   ApiResponse queryAvailableTime(@RequestHeader HttpHeaders header, @ModelAttribute QueryAvailableTimeRequest request) {
     logger.info("/yuntuoguan/queryAvailableTime get header {} request{}", header, request);
     QueryAvailableTimeResponse resp = new QueryAvailableTimeResponse();
+    String openId = header.getFirst(openIdStr);
+    boolean isCounselor = false;
     try {
-      DayPeriod dayPeriod = DayPeriod.getAvailablePeriod(request.getStart_date(), request.getCounselor_id(), counselingService, orderService);
+      if (Objects.equals(openId, "ozuHC62-4wT5wD5y1Bb7aCYJvh6o") || Objects.equals(openId, "ozuHC66EfPObPURTVZAnWJcsMROY")){
+        isCounselor = true;
+      }
+
+      DayPeriod dayPeriod = DayPeriod.getAvailablePeriod(request.getStart_date(), request.getCounselor_id(), counselingService, orderService, visitorService, isCounselor);
       HashMap<String, DayPeriod> calendar = new HashMap<>();
       calendar.put(dayPeriod.getDate(), dayPeriod);
       resp.setCalendar(calendar);
@@ -328,10 +334,12 @@ ApiResponse queryOrderList(@RequestHeader HttpHeaders header, @ModelAttribute Qu
     order.setUpdateTime(LocalDateTime.now());
     order.setWay(counseling.get().getWay());
     order.setDuration(counseling.get().getDuration());
-
-      order.setFee(counseling.get().getFee());
+    order.setFee(counseling.get().getFee());
+    if (Objects.equals(openId, "ozuHC62-4wT5wD5y1Bb7aCYJvh6o") || Objects.equals(openId, "ozuHC66EfPObPURTVZAnWJcsMROY")){
+       order.setFee(1);
+    }
     order.setBizDate(DateUtil.dateToTime(request.getUnit_period_key().split("_")[0]));
-      this.orderService.createOrder(order);
+    this.orderService.createOrder(order);
 
     resp.setOrder_id(order.getOrderId());
     //调用微信支付

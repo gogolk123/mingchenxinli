@@ -18,7 +18,7 @@ public class DateUtil {
         if (hours >= 18) {
             return "晚上";
         }
-        if (hours > 12) {
+        if (hours >= 12) {
             return "下午";
         }
         return "上午";
