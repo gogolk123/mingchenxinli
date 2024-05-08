@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 
 @Data
 public class Order implements Serializable {
@@ -49,7 +50,7 @@ public class Order implements Serializable {
 
   public String GetDate() {
     String[] period =  this.unitPeriodKey.split("_");
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM月dd日(EEE)");
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM月dd日(EEE)", Locale.CHINA);
     return DateUtil.dateToTime(period[0]).format(formatter);
   }
 
